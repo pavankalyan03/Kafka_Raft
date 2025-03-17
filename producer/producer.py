@@ -4,9 +4,9 @@ import time
 import random
 
 producer = KafkaProducer(
-    bootstrap_servers='kafka:9092',  # Changed to Docker service name
+    bootstrap_servers='kafka:9092',  
     value_serializer=lambda v: json.dumps(v).encode('utf-8'),
-    linger_ms=100,  # Added linger to improve batch efficiency
+    linger_ms=100,  
     acks='all',  # Ensure message acknowledgment
     retries=3  # Add retries for reliability
 )
@@ -23,10 +23,10 @@ while True:
 
     try:
         future = producer.send('ecommerce-events', value=event_data)
-        result = future.get(timeout=30)  # Reduced timeout to 30s
+        result = future.get(timeout=30) 
         print(f"Success: {event_data}")
     except Exception as e:
         print(f"Failed: {e}")
-        # Add retry logic here if needed
+        
 
-    time.sleep(random.uniform(0.5, 2.5))  # More realistic random interval
+    time.sleep(random.uniform(0.5, 2.5))  #realistic random interval
